@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<!--
+  Copyright 2009-2011 Bettina Schrag and Corsin Decurtins
+  All rights reserved.
+-->
+
+<html>
+  <head>
+    <title>Death Time Calculator</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="css/deathtime.css"/>
+    <script type="text/javascript" src="js/jquery-1.6.4.min.js"> </script>
+    <script type="text/javascript" src="js/jquery.tools-1.2.5.min.js"> </script>
+    <script type="text/javascript" src="js/jquery.validate-1.7.js"> </script>
+    <script type="text/javascript" src="js/deathtime.js"> </script>
+    <link rel="icon" href="images/icon.png" />
+    <link rel="shortcut icon" href="images/icon.ico" />
+  </head>
+  <body id="desktop" class="desktop">
+    <div class="page">
+      <div id="header">
+        <div class="container">
+          <h1>Death Time Calculator</h1>
+        </div>
+      </div>
+      <div id="content">
+        <div class="container">
+          <form id="parametersForm" action="#" method="post">
+            <div id="parameters">
+              <div id="sections">
+                <div class="section">
+                  <h2 class="current">Basic Data</h2>
+                  <div class="sectionContent">
+                    <fieldset>
+                      <div class="field">
+                        <label for="measurementDate">Date of Measurement</label>
+                        <input id="measurementDate" type="date" value="" name="measurmentDate" class="dtcDate"/>
+                      </div>
+                      <div class="field">
+                        <label for="measurementTime">Time of Measurement</label>
+                        <input id="measurementTime" type="time" value="" name="measurmentTime" class="dtcTime"/>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <div class="section">
+                  <h2>Body and Ambient Factors</h2>
+                  <div class="sectionContent">
+                    <fieldset>
+                      <div class="field">
+                        <label for="ambientTemperatureMin">Ambient Temperature</label>
+                        <input id="ambientTemperatureMin" type="text" value="" name="ambientTemperatureMin" class="number temperature"/>
+                        &#160;-&#160;
+                        <input id="ambientTemperatureMax" type="text" value="" name="ambientTemperatureMax" class="number temperature interval"/>
+                      </div>
+                      <div class="field">
+                        <label for="bodyTemperature">Body Temperature</label>
+                        <input id="bodyTemperature" type="text" value="" name="bodyTemperature" class="number temperature"/>
+                      </div>
+                      <div class="field">
+                        <label for="initialBodyTemperature">Initial Body Temperature</label>
+                        <input id="initialBodyTemperature" type="text" value="37.2" name="initialBodyTemperature" class="number temperature"/>
+                      </div>
+                      <div class="field">
+                        <label for="bodyWeightMin">Body Weight</label>
+                        <input id="bodyWeightMin" type="text" value="" name="bodyWeightMin" class="number"/>
+                        &#160;-&#160;
+                        <input id="bodyWeightMax" type="text" value="" name="bodyWeightMax" class="number interval"/>
+                      </div>
+                      <div class="field">
+                        <div id="correctionFactorImageContainer">
+                          <img id="correctionFactorImage" src="images/correction.png"/>
+                          <div id="correctionFactorRange">&#160;</div>
+                        </div>
+                        <div><span class="label">Correction Factor: </span><span id="correctionFactor">1.00 - 1.00</span></div>
+                      	<label for="correctionFactorMin">Min:</label>
+                       	<input type="range" name="correctionFactorMin" id="correctionFactorMin" value="100" min="0" max="300" step="1" />
+                       	<br/>
+                      	<label for="correctionFactorMax">Max:</label>
+                       	<input type="range" name="correctionFactorMax" id="correctionFactorMax" value="100" min="0" max="300" step="1" />
+                      </div>
+                      <div class="field">
+                        <label for="correctionFactorMin">Correction Factor</label>
+                        <input id="correctionFactorMin" type="text" value="" name="correctionFactorMin" class="number"/>
+                        &#160;-&#160;
+                        <input id="correctionFactorMax" type="text" value="" name="correctionFactorMax" class="number interval"/>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <div class="section">
+                  <h2>Lividity</h2>
+                  <div class="sectionContent">
+                    <div class="field">
+                      <label>Beginning</label>
+                      <input id="livoresBeginnPositive" type="radio" name="livoresBeginn" value="true"/>positive
+                      <input id="livoresBeginnNegative" type="radio" name="livoresBeginn" value="false"/>negative
+                      <input id="livoresBeginnUnknown" type="radio" name="livoresBeginn" value="undefined" checked="checked"/>not available
+                    </div>
+                    <div class="field">
+                      <label>Confluent</label>
+                      <input id="livoresKonfluenzPositive" type="radio" name="livoresKonfluenz" value="true"/>positive
+                      <input id="livoresKonfluenzNegative" type="radio" name="livoresKonfluenz" value="false"/>negative
+                      <input id="livoresKonfluenzUnknown" type="radio" name="livoresKonfluenz" value="undefined" checked="checked"/>not available
+                    </div>
+                    <div class="field">
+                      <label>Maximum</label>
+                      <input id="livoresMaximumPositive" type="radio" name="livoresMaximum" value="true"/>positive
+                      <input id="livoresMaximumNegative" type="radio" name="livoresMaximum" value="false"/>negative
+                      <input id="livoresMaximumUnknown" type="radio" name="livoresMaximum" value="undefined" checked="checked"/>not available
+                    </div>
+                    <div class="field">
+                      <label>Liv. thumb pressure</label>
+                      <input id="livoresDaumendruckPositive" type="radio" name="livoresDaumendruck" value="true"/>positive
+                      <input id="livoresDaumendruckNegative" type="radio" name="livoresDaumendruck" value="false"/>negative
+                      <input id="livoresDaumendruckUnknown" type="radio" name="livoresDaumendruck" value="undefined" checked="checked"/>not available
+                    </div>
+                    <div class="field">
+                      <label>Complete shifting</label>
+                      <input id="livoresVerlagerbarkeitVollstaendigPositive" type="radio" name="livoresVerlagerbarkeitVollstaendig" value="true"/>positive
+                      <input id="livoresVerlagerbarkeitVollstaendigNegative" type="radio" name="livoresVerlagerbarkeitVollstaendig" value="false"/>negative
+                      <input id="livoresVerlagerbarkeitVollstaendigUnknown" type="radio" name="livoresVerlagerbarkeitVollstaendig" value="undefined" checked="checked"/>not available
+                    </div>
+                    <div class="field">
+                      <label>Partial shifting</label>
+                      <input id="livoresVerlagerbarkeitUnvollstaendigPositive" type="radio" name="livoresVerlagerbarkeitUnvollstaendig" value="true"/>positive
+                      <input id="livoresVerlagerbarkeitUnvollstaendigNegative" type="radio" name="livoresVerlagerbarkeitUnvollstaendig" value="false"/>negative
+                      <input id="livoresVerlagerbarkeitUnvollstaendigUnknown" type="radio" name="livoresVerlagerbarkeitUnvollstaendig" value="undefined" checked="checked"/>not available
+                    </div>
+                  </div>
+                </div>
+                <div class="section">
+                  <h2>Rigor</h2>
+                  <div class="sectionContent">
+                    <div class="field">
+                      <label>Beginning</label>
+                      <input id="rigorBeginnPositive" type="radio" name="rigorBeginn" value="true"/>positive
+                      <input id="rigorBeginnNegative" type="radio" name="rigorBeginn" value="false"/>negative
+                      <input id="rigorBeginnUnknown" type="radio" name="rigorBeginn" value="undefined" checked="checked"/>not available
+                    </div>
+                    <div class="field">
+                      <label>Reinstallation after breaking</label>
+                      <input id="rigorWiederbildungPositive" type="radio" name="rigorWiederbildung" value="true"/>positive
+                      <input id="rigorWiederbildungNegative" type="radio" name="rigorWiederbildung" value="false"/>negative
+                      <input id="rigorWiederbildungUnknown" type="radio" name="rigorWiederbildung" value="undefined" checked="checked"/>not available
+                    </div>
+                    <div class="field">
+                      <label>Full Maximum</label>
+                      <input id="rigorMaximumPositive" type="radio" name="rigorMaximum" value="true"/>positive
+                      <input id="rigorMaximumNegative" type="radio" name="rigorMaximum" value="false"/>negative
+                      <input id="rigorMaximumUnknown" type="radio" name="rigorMaximum" value="undefined" checked="checked"/>not available
+                    </div>
+                  </div>
+                </div>
+                <div class="section">
+                  <h2>Electrical Excitability</h2>
+                  <div class="sectionContent">
+                    <fieldset>
+                      <div class="field">
+                        <label>Mimic muscles</label>
+                        <img id="reizbarkeitAugenbraueGrad1Img" src="images/grad-1.png" alt="I" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad2Img" src="images/grad-2.png" alt="II" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad3Img" src="images/grad-3.png" alt="III" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad4Img" src="images/grad-4.png" alt="IV" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad5Img" src="images/grad-5.png" alt="V" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad6Img" src="images/grad-6.png" alt="VI" class="gradeImage"/>
+                      </div>
+                      <div class="gradeRadio">
+                        <input id="reizbarkeitAugenbraueGrad1" type="radio" name="reizbarkeitAugenbraue" value="grad1"/>I
+                        <input id="reizbarkeitAugenbraueGrad2" type="radio" name="reizbarkeitAugenbraue" value="grad2"/>II
+                        <input id="reizbarkeitAugenbraueGrad3" type="radio" name="reizbarkeitAugenbraue" value="grad3"/>III
+                        <input id="reizbarkeitAugenbraueGrad4" type="radio" name="reizbarkeitAugenbraue" value="grad4"/>IV
+                        <input id="reizbarkeitAugenbraueGrad5" type="radio" name="reizbarkeitAugenbraue" value="grad5"/>V
+                        <input id="reizbarkeitAugenbraueGrad6" type="radio" name="reizbarkeitAugenbraue" value="grad6"/>VI
+                        <input id="reizbarkeitAugenbraueUnknown" type="radio" name="reizbarkeitAugenbraue" value="unknown" checked="checked"/>not available
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="section">
+                <div class="sectionContent">
+                  <input type="submit" class="button" value="Calculate"/>
+                  <input type="reset" class="button" value="Clear"/>
+                </div>
+              </div>
+            </div>
+            <div id="results">
+              <div class="section">
+                <h2>Results</h2>
+                <div class="sectionContent">
+                  <div class="field">
+                    <span class="label">Time (relative)</span>
+                    <span class="value" id="tRelative">&#160;</span>
+                  </div>
+                  <div class="field">
+                    <span class="label">Time (absolute)</span>
+                    <span class="value" id="tAbsolute">&#160;</span>
+                  </div>
+                </div>
+                <div class="sectionContent">
+                  <div id="messages">&#160;</div>
+                </div>
+                <div class="sectionContent">
+                  <div class="field">
+                    <span class="label">Time (Temperature)</span>
+                    <span class="value" id="tTemperature">&#160;</span>
+                  </div>
+                  <div class="field">
+                    <span class="label">Time (Lividity)</span>
+                    <span class="value" id="tLividity">&#160;</span>
+                  </div>
+                  <div class="field">
+                    <span class="label">Time (Rigor)</span>
+                    <span class="value" id="tRigor">&#160;</span>
+                  </div>
+                  <div class="field">
+                    <span class="label">Time (Mimic)</span>
+                    <span class="value" id="tMimic">&#160;</span>
+                  </div>
+                  <div class="field">
+                    <span class="label">Time (Orbicularis Oris)</span>
+                    <span class="value" id="tOrbicularis">&#160;</span>
+                  </div>
+                </div>
+              </div>
+              <div class="section">
+                <h2>Details</h2>
+                <div class="sectionContent">
+                  <div class="field">
+                    <span class="label">Correction Factor (Adapted)</span>
+                    <span class="value" id="correctionFactorAdapted">&#160;</span>
+                  </div>
+                  <div class="field">
+                    <span class="label">Body Weight (Adapted)</span>
+                    <span class="value" id="bodyWeightAdapted">&#160;</span>
+                  </div>
+                  <div class="field">
+                    <span class="label">q</span>
+                    <span class="value" id="q">&#160;</span>
+                  </div>
+                  <div class="field">
+                    <span class="label">Temperature Error</span>
+                    <span class="value" id="temperatureError">&#160;</span>
+                  </div>
+                  <div class="field">
+                    <span class="label">Time Temp w/o Error</span>
+                    <span class="value" id="tTempWithoutError">&#160;</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="footer">
+        <div class="container">
+          <div class="copyright">Copyright &#169; 2009-2011 Bettina Schrag and Corsin Decurtins
+          <div class="versionInfo">Version 2.2.3</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

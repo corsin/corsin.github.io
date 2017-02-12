@@ -1,0 +1,283 @@
+@font-face {
+    font-family: 'LeagueGothicRegular';
+    src: url('../fonts/League_Gothic-webfont-eot.eot?') format('eot'),
+         url('../fonts/League_Gothic-webfont-woff.woff') format('woff'),
+         url('../fonts/League_Gothic-webfont-ttf.ttf') format('truetype'),
+         url('../fonts/League_Gothic-webfont-svg.svg#webfont1Lb5Pdit') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+  font-family: Helvetica Neue, Helvetica, Verdana, Arial, sans-serif;
+  font-size: medium;
+}
+
+.desktop .container {
+  width: 960px;
+  margin: 0px auto;
+}
+
+.desktop #header {
+  background-color: #606060;
+  color: white;
+  line-height: 1.5;
+  margin-bottom: 5ex;
+}
+
+.desktop #footer {
+  clear: both;
+  color: #808080;
+  font-size: x-small;
+  line-height: 1.25;
+  padding-top: 5ex;
+}
+
+.desktop #parameters {
+  float: left;
+  width: 59%;
+}
+
+.desktop #results {
+  float: right;
+  width: 39%;
+}
+
+.desktop h1 {
+  font-family: 'LeagueGothicRegular', Helvetica, Arial, sans-serif;
+  font-size: 56px;
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+.desktop #sections {
+}
+
+.desktop .section h2 {
+	cursor: default;
+	background-color: #808080;
+	color: #ffffff;
+  font-size: medium;
+	margin-bottom: 1ex;
+	padding: .5ex 1ex 1ex 1ex;
+	cursor: pointer;		
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+.mobile h2 {
+  margin-bottom: 2ex;
+  margin-top: 2ex;
+}
+
+.desktop #sections h2 {
+  background-color: #f0f0f0;
+  color: #c0c0c0;
+}
+
+.desktop #sections h2.current {
+	cursor: default;
+	background-color: #808080;
+	color: #ffffff;
+}
+
+.desktop #sections .sectionContent {
+	display: none;
+}
+
+.desktop .section .sectionContent {
+	padding: .5ex 1ex;
+	margin-bottom: 1ex;
+}
+
+.mobile .section .sectionContent {
+  margin-bottom: 1ex;
+}
+
+.mobile p {
+  padding: 1ex 0px 1ex 0px;
+}
+
+.tooltip {
+	background-color: #000000;
+	border: 1px solid #ffffff;
+	padding: 10px 15px;
+	width: 200px;
+	display: none;
+	color: #ffffff;
+	text-align: left;
+	font-size: small;
+	-moz-box-shadow:0 0 10px #000;
+	-webkit-box-shadow:0 0 10px #000;
+}
+
+.field {
+  margin-bottom: 1ex;
+}
+
+.desktop label,
+.desktop .label {
+  color: #404040;
+  float: left;
+  width: 30ex;
+}
+
+#results label,
+#results .label {
+  width: 25ex;
+  font-size: small;
+  display: block;
+  padding: 0px 0px .5ex 0px;
+}
+
+#results .value {
+  display: block;
+  padding: .5ex 0px 0px 1ex;
+  font-weight: bold;
+}
+
+input {
+}
+
+#messages {
+  line-height: 1.25;
+}
+
+.error {
+  color: #990000;
+  font-weight: bold;
+}
+
+.warning {
+  color: orange;
+  font-weight: bold;
+}
+
+.mobile #correctionFactorImageContainer,
+.desktop #correctionFactorImageContainer {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.mobile #correctionFactorRange,
+.desktop #correctionFactorRange {
+  background-color: #900000;
+  opacity: 0.4;
+  position: absolute;
+  z-index; 1;
+  top: 0px;
+  left: 120px;
+  width: 2px;
+  height: 220px;
+}
+
+.mobile #correctionFactorImageContainer img {
+  position: absolute;
+  z-index; 2;
+  top: 10px;
+  left: 0px;
+}
+
+.desktop #correctionFactorImageContainer img {
+  position: absolute;
+  z-index; 2;
+  top: 10px;
+  left: 0px;
+}
+
+.mobile #correctionFactorMin,
+.mobile #correctionFactorMax {
+  visibility: hidden;
+}
+
+.mobile div.gradeImageContainer {
+  width: 272px;
+  height: 220px;
+}
+
+.desktop div.gradeImageContainer {
+  width: 480px;
+  height: 220px;
+}
+
+.mobile div.gradeImages {
+  width: 220px;
+  overflow: hidden;
+  position: relative;
+  top: -20px;
+  left: 20px;
+}
+
+.mobile div.gradeAugenbraueImagePanel,
+.mobile div.gradeOrisImagePanel {
+  position: relative;
+  top: 0px;
+  width: 2000px;
+}
+
+.mobile img.gradeImage {
+  width: 220px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.mobile .arrowPrev,
+.mobile .arrowNext {
+  display: inline;
+  position: relative;
+}
+
+.mobile .arrowPrev {
+  top: 110px;
+  left: 0px;
+}
+
+.mobile .arrowNext {
+  top: -140px;
+  left: 240px;
+}
+
+.mobile .gradeRadio {
+  visibility: hidden;
+}
+
+.small {
+  font-size: small;
+}
+
+.mobile .logos {
+  text-align: center;
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+}
+
+.mobile .logos h1 {
+  font-weight: bold;
+  font-size: 24px;
+  padding-bottom: .5ex;
+}
+
+.mobile .affiliation {
+  margin-bottom: 2ex;
+  color: #808080;
+}
+
+.mobile .affiliation .title {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+.mobile .affiliation .subtitle {
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.mobile .warn {
+  background-color: #900000;
+  color: #ffffff;
+  padding: .5em .5em;
+}

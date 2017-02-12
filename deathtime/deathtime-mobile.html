@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<!--
+  Copyright 2009-2011 Bettina Schrag and Corsin Decurtins
+  All rights reserved.
+-->
+
+<html manifest="cache.mf">
+  <head>
+    <title>DTC</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/deathtime.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.0.1.min.css" />
+    <script type="text/javascript" src="js/jquery-1.6.4.min.js"> </script>
+    <script type="text/javascript" src="js/jquery.tools-1.2.5.min.js"> </script>
+    <script type="text/javascript" src="js/jquery.validate-1.7.js"> </script>
+    <script type="text/javascript" src="js/deathtime.js"> </script>
+    <script type="text/javascript" src="js/jquery.mobile-1.0.1.min.js"> </script>
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+    <link rel="apple-touch-icon" href="images/icon.png"/>
+    <link rel="apple-touch-icon-precomposed" href="images/icon.png"/>
+   <link rel="icon" href="images/icon.png" />
+   <link rel="shortcut icon" href="images/icon.ico" />
+  </head>
+  <body id="mobile" class="mobile">
+
+    <div id="splash" data-role="page" data-theme="d">
+	  <div data-role="content">
+		<div class="logos">
+		  <h1>Death Time Calculator</h1>
+		  <div class="small">Version 2.2.3</div>
+          <br/>
+          <br/>
+          <br/>
+          <div class="affiliation">
+	        <div class="title">CURML</div>
+          	<div class="subtitle">Centre Universitaire Romand<br/>de M&#233;decine L&#233;gale</div>
+          </div>
+  		  <div class="affiliation"><img src="images/curml_logo_unige.png" alt="Universit&#233; de Gen&#232;ve"/></div>
+		  <div class="affiliation"><img src="images/curml-logo_hug.gif" alt="H&#244;pitaux Universitaires de Gen&#232;ve"/></div>
+		</div>	
+	  </div>
+    </div>
+    
+    <div id="capture" data-role="page" data-theme="d">
+      <div data-role="header">
+        <h1>Death Time</h1>
+      </div>
+      <div data-role="content">
+        <div class="container">
+          <div id="parameters">
+            <form id="parametersForm" method="post">
+              <div data-role="collapsible" data-collapsed="false">
+                <h2>Basic Data</h2>
+                <div data-role="fieldcontain">
+                  <fieldset>
+                    <label for="measurementDate">Date of measurement</label>
+                    <input id="measurementDate" type="text" value="" name="measurementDate" class="dtcDate"/>
+                  </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                  <fieldset>
+                    <label for="measurementTime">Time of measurement</label>
+                    <input id="measurementTime" type="text" value="" name="measurementTime" class="time"/>
+                  </fieldset>
+                </div>
+              </div>
+              <div data-role="collapsible" data-collapsed="false">
+              <h2>Body and Ambient Factors</h2>
+                <div data-role="fieldcontain">
+                  <fieldset>
+                    <label for="ambientTemperatureMin">Ambient temperature</label>
+                    <div class="ui-grid-a">
+                    	<div class="ui-block-a"><input id="ambientTemperatureMin" type="text" value="" name="ambientTemperatureMin" class="number temperature" size="5"/></div>
+                    	<div class="ui-block-b"><input id="ambientTemperatureMax" type="text" value="" name="ambientTemperatureMax" class="number temperature interval" size="5"/></div>
+                    </div>                    
+                  </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                  <fieldset>
+                    <label for="bodyTemperature">Body temperature</label>
+                    <input id="bodyTemperature" type="text" value="" name="bodyTemperature" class="number temperature" size="5">
+                  </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                  <fieldset>
+                    <label for="initialBodyTemperature">Initial body temperature</label>
+                    <input id="initialBodyTemperature" type="text" value="37.2" name="initialBodyTemperature" class="number temperature" size="5">
+                  </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                  <fieldset>
+                    <label for="bodyWeightMin">Body weight</label>
+                    <div class="ui-grid-a">
+                    	<div class="ui-block-a"><input id="bodyWeightMin" type="text" value="" name="bodyWeightMin" class="number positiveNumber weight" size="5"></div>
+                    	<div class="ui-block-b"><input id="bodyWeightMax" type="text" value="" name="bodyWeightMax" class="number positiveNumber weight interval" size="5"/></div>
+                    </div>                    
+                  </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                  <div id="correctionFactorImageContainer">
+                    <img id="correctionFactorImage" src="images/correction.png"/>
+                    <div id="correctionFactorRange">&#160;</div>
+                  </div>
+                  <div><span class="label">Correction Factor: </span><span id="correctionFactor">1.00 - 1.00</span></div>
+                	<label for="correctionFactorMin">Min:</label>
+                 	<input type="range" name="correctionFactorMin" id="correctionFactorMin" value="100" min="0" max="300" step="1" />
+                 	<br/>
+                	<label for="correctionFactorMax">Max:</label>
+                 	<input type="range" name="correctionFactorMax" id="correctionFactorMax" value="100" min="0" max="300" step="1" />
+                </div>
+                <div data-role="fieldcontain">
+	              <p>If the particular correction factor is not known, the following parameters can also be used to determine it.</p>
+	              <p class="warn">Do only fill in these parameters, if you have not set a correction factor (i.e. the correction factor is set to 1).</p>
+                  <fieldset data-role="controlgroup">
+                    <legend>Surface</legend>
+                    <input id="surfaceIndifferent" type="radio" name="surface" value="indifferent"/><label for="surfaceIndifferent">indifferent</label>
+                    <input id="surfaceInsulatingHeavily" type="radio" name="surface" value="heavilyInsulating"/><label for="surfaceInsulatingHeavily">heavily insulating</label>
+                    <input id="surfaceInsulatingLightly" type="radio" name="surface" value="lightlyInsulating"/><label for="surfaceInsulatingLightly">lightly insulating</label>
+                    <input id="surfaceConducting" type="radio" name="surface" value="conducting"/><label for="surfaceConducting">conducting</label>
+                    <input id="surfaceUnknown" type="radio" name="surface" value="unknown" checked="checked"/><label for="surfaceUnknown">n/a</label>
+                    <p class="small">
+                      <strong>indifferent</strong> = apartment floor, lawn, dry earth, asphalt
+                    </p>
+                    <p class="small">
+                      <strong>heavily insulating</strong> = thick padding
+                    </p>
+                    <p class="small">
+                      <strong>lightly insulating</strong> = mattress, thick carpet
+                    </p>
+                    <p class="small">
+                      <strong>conducting</strong> = concrete, stone, tiles
+                    </p>
+                  </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                  <fieldset data-role="controlgroup">
+                    <legend>Clothing</legend>
+                    <input id="clothingThick" type="radio" name="clothing" value="thick"/><label for="clothingThick">thick</label>
+                    <input id="clothingThin" type="radio" name="clothing" value="thin"/><label for="clothingThin">thin</label>
+                    <input id="clothingNaked" type="radio" name="clothing" value="naked"/><label for="clothingNaked">naked</label>
+                    <input id="clothingUnknown" type="radio" name="clothing" value="unknown" checked="checked"/><label for="clothingUnknown">n/a</label>
+                  </fieldset>
+                </div>
+              </div>
+              
+            <div data-role="collapsible" data-collapsed="true">
+            <h2>Livores</h2>
+            <div data-role="fieldcontain">
+              <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>Beginning</legend>
+                <input id="livoresBeginnPositive" type="radio" name="livoresBeginn" value="true"/><label for="livoresBeginnPositive">yes</label>
+                <input id="livoresBeginnNegative" type="radio" name="livoresBeginn" value="false"/><label for="livoresBeginnNegative">no</label>
+                <input id="livoresBeginnUnknown" type="radio" name="livoresBeginn" value="undefined" checked="checked"/><label for="livoresBeginnUnknown">n/a</label>
+              </fieldset>
+            </div>
+            <div data-role="fieldcontain">
+              <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>Confluent</legend>
+                <input id="livoresKonfluenzPositive" type="radio" name="livoresKonfluenz" value="true"/><label for="livoresKonfluenzPositive">yes</label>
+                <input id="livoresKonfluenzNegative" type="radio" name="livoresKonfluenz" value="false"/><label for="livoresKonfluenzNegative">no</label>
+                <input id="livoresKonfluenzUnknown" type="radio" name="livoresKonfluenz" value="undefined" checked="checked"/><label for="livoresKonfluenzUnknown">n/a</label>
+              </fieldset>
+            </div>
+            <div data-role="fieldcontain">
+              <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>Maximum</legend>
+                <input id="livoresMaximumPositive" type="radio" name="livoresMaximum" value="true"/><label for="livoresMaximumPositive">yes</label>
+                <input id="livoresMaximumNegative" type="radio" name="livoresMaximum" value="false"/><label for="livoresMaximumNegative">no</label>
+                <input id="livoresMaximumUnknown" type="radio" name="livoresMaximum" value="undefined" checked="checked"/><label for="livoresMaximumUnknown">n/a</label>
+              </fieldset>
+            </div>
+            <div data-role="fieldcontain">
+              <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>Liv. thumb pressure</legend>
+                <input id="livoresDaumendruckPositive" type="radio" name="livoresDaumendruck" value="true"/><label for="livoresDaumendruckPositive">yes</label>
+                <input id="livoresDaumendruckNegative" type="radio" name="livoresDaumendruck" value="false"/><label for="livoresDaumendruckNegative">no</label>
+                <input id="livoresDaumendruckUnknown" type="radio" name="livoresDaumendruck" value="undefined" checked="checked"/><label for="livoresDaumendruckUnknown">n/a</label>
+              </fieldset>
+            </div>
+            <div data-role="fieldcontain">
+              <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>Complete shifting</legend>
+                <input id="livoresVerlagerbarkeitVollstaendigPositive" type="radio" name="livoresVerlagerbarkeitVollstaendig" value="true"/><label for="livoresVerlagerbarkeitVollstaendigPositive">yes</label>
+                <input id="livoresVerlagerbarkeitVollstaendigNegative" type="radio" name="livoresVerlagerbarkeitVollstaendig" value="false"/><label for="livoresVerlagerbarkeitVollstaendigNegative">no</label>
+                <input id="livoresVerlagerbarkeitVollstaendigUnknown" type="radio" name="livoresVerlagerbarkeitVollstaendig" value="undefined" checked="checked"/><label for="livoresVerlagerbarkeitVollstaendigUnknown">n/a</label>
+              </fieldset>
+            </div>
+            <div data-role="fieldcontain">
+              <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>Partial shifting</legend>
+                <input id="livoresVerlagerbarkeitUnvollstaendigPositive" type="radio" name="livoresVerlagerbarkeitUnvollstaendig" value="true"/><label for="livoresVerlagerbarkeitUnvollstaendigPositive">yes</label>
+                <input id="livoresVerlagerbarkeitUnvollstaendigNegative" type="radio" name="livoresVerlagerbarkeitUnvollstaendig" value="false"/><label for="livoresVerlagerbarkeitUnvollstaendigNegative">no</label>
+                <input id="livoresVerlagerbarkeitUnvollstaendigUnknown" type="radio" name="livoresVerlagerbarkeitUnvollstaendig" value="undefined" checked="checked"/><label for="livoresVerlagerbarkeitUnvollstaendigUnknown">n/a</label>
+              </fieldset>
+            </div>
+            </div>
+            <div data-role="collapsible" data-collapsed="true">
+            <h2>Rigor</h2>
+            <div data-role="fieldcontain">
+              <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>Beginning</legend>
+                <input id="rigorBeginnPositive" type="radio" name="rigorBeginn" value="true"/><label for="rigorBeginnPositive">yes</label>
+                <input id="rigorBeginnNegative" type="radio" name="rigorBeginn" value="false"/><label for="rigorBeginnNegative">no</label>
+                <input id="rigorBeginnUnknown" type="radio" name="rigorBeginn" value="undefined" checked="checked"/><label for="rigorBeginnUnknown">n/a</label>
+              </fieldset>
+            </div>
+            <div data-role="fieldcontain">
+              <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>Reinstallation after breaking</legend>
+                <input id="rigorWiederbildungPositive" type="radio" name="rigorWiederbildung" value="true"/><label for="rigorWiederbildungPositive">yes</label>
+                <input id="rigorWiederbildungNegative" type="radio" name="rigorWiederbildung" value="false"/><label for="rigorWiederbildungNegative">no</label>
+                <input id="rigorWiederbildungUnknown" type="radio" name="rigorWiederbildung" value="undefined" checked="checked"/><label for="rigorWiederbildungUnknown">n/a</label>
+              </fieldset>
+            </div>
+            <div data-role="fieldcontain">
+              <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>Full Maximum</legend>
+                <input id="rigorMaximumPositive" type="radio" name="rigorMaximum" value="true"/><label for="rigorMaximumPositive">yes</label>
+                <input id="rigorMaximumNegative" type="radio" name="rigorMaximum" value="false"/><label for="rigorMaximumNegative">no</label>
+                <input id="rigorMaximumUnknown" type="radio" name="rigorMaximum" value="undefined" checked="checked"/><label for="rigorMaximumUnknown">n/a</label>
+              </fieldset>
+            </div>
+            </div>
+
+            <div data-role="collapsible" data-collapsed="true">
+              <h2>Electrical excitability</h2>
+              <div data-role="fieldcontain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                  <legend>Mimic muscles</legend>
+                  <div class="gradeImageContainer">
+                    <div class="arrowPrev">
+                      <img src="images/arrow-left.png" id="gradPrev" alt="previous" class="arrow"/>
+                    </div>
+                    <div class="gradeImages">
+                      <div class="gradeAugenbraueImagePanel">
+                        <img id="reizbarkeitAugenbraueGrad0Img" src="images/grad-unknown.png" alt="Unknown" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad6Img" src="images/grad-6.png" alt="VI" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad5Img" src="images/grad-5.png" alt="V" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad4Img" src="images/grad-4.png" alt="IV" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad3Img" src="images/grad-3.png" alt="III" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad2Img" src="images/grad-2.png" alt="II" class="gradeImage"/>
+                        <img id="reizbarkeitAugenbraueGrad1Img" src="images/grad-1.png" alt="I" class="gradeImage"/>
+                      </div>
+                    </div>
+                    <div class="arrowNext">
+                      <img src="images/arrow-right.png" id="gradNext" alt="next" class="arrow"/>
+                    </div>
+                  </div>
+                  <div class="gradeRadio">
+                  <input id="reizbarkeitAugenbraueGrad6" type="radio" name="reizbarkeitAugenbraue" value="grad6"/><label for="reizbarkeitAugenbraueGrad6">VI</label>
+                  <input id="reizbarkeitAugenbraueGrad5" type="radio" name="reizbarkeitAugenbraue" value="grad5"/><label for="reizbarkeitAugenbraueGrad5">V</label>
+                  <input id="reizbarkeitAugenbraueGrad4" type="radio" name="reizbarkeitAugenbraue" value="grad4"/><label for="reizbarkeitAugenbraueGrad4">IV</label>
+                  <input id="reizbarkeitAugenbraueGrad3" type="radio" name="reizbarkeitAugenbraue" value="grad3"/><label for="reizbarkeitAugenbraueGrad3">III</label>
+                  <input id="reizbarkeitAugenbraueGrad2" type="radio" name="reizbarkeitAugenbraue" value="grad2"/><label for="reizbarkeitAugenbraueGrad2">II</label>
+                  <input id="reizbarkeitAugenbraueGrad1" type="radio" name="reizbarkeitAugenbraue" value="grad1"/><label for="reizbarkeitAugenbraueGrad1">I</label>
+                  <input id="reizbarkeitAugenbraueUnknown" type="radio" name="reizbarkeitAugenbraue" value="unknown" checked="checked"/><label for="reizbarkeitAugenbraueUnknown">n/a</label>
+                  </div>
+                </fieldset>
+              </div>
+              <div data-role="fieldcontain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                  <legend>Orbicularis Oris</legend>
+                  <div class="gradeImageContainer">
+                    <div class="arrowPrev">
+                      <img src="images/arrow-left.png" id="orisGradPrev" alt="previous" class="arrow"/>
+                    </div>
+                    <div class="gradeImages">
+                      <div class="gradeOrisImagePanel">
+                        <img id="reizbarkeitOrisGrad0Img" src="images/oris-grad-unknown.png" alt="Unknown" class="gradeImage"/>
+                        <img id="reizbarkeitOrisGrad3Img" src="images/oris-grad-3.png" alt="III" class="gradeImage"/>
+                        <img id="reizbarkeitOrisGrad2Img" src="images/oris-grad-2.png" alt="II" class="gradeImage"/>
+                        <img id="reizbarkeitOrisGrad1Img" src="images/oris-grad-1.png" alt="I" class="gradeImage"/>
+                      </div>
+                    </div>
+                    <div class="arrowNext">
+                      <img src="images/arrow-right.png" id="orisGradNext" alt="next" class="arrow"/>
+                    </div>
+                  </div>
+                  <div class="gradeRadio">
+                  <input id="reizbarkeitOrisGrad3" type="radio" name="reizbarkeitOris" value="grad3"/><label for="reizbarkeitOrisGrad3">+++</label>
+                  <input id="reizbarkeitOrisGrad2" type="radio" name="reizbarkeitOris" value="grad2"/><label for="reizbarkeitOrisGrad2">++</label>
+                  <input id="reizbarkeitOrisGrad1" type="radio" name="reizbarkeitOris" value="grad1"/><label for="reizbarkeitOrisGrad1">+</label>
+                  <input id="reizbarkeitOrisUnknown" type="radio" name="reizbarkeitOris" value="unknown" checked="checked"/><label for="reizbarkeitOrisUnknown">n/a</label>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            
+            <div data-role="collapsible" data-collapsed="true">
+              <h2>Chemical excitability</h2>
+              <div data-role="fieldcontain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                  <legend>Atropin</legend>
+                  <input id="reizbarkeitIrisAtropinPositive" type="radio" name="reizbarkeitIrisAtropin" value="positive"/><label for="reizbarkeitIrisAtropinPositive">yes</label>
+                  <input id="reizbarkeitIrisAtropinNegative" type="radio" name="reizbarkeitIrisAtropin" value="negative"/><label for="reizbarkeitIrisAtropinNegative">no</label>
+                  <input id="reizbarkeitIrisAtropinUnknown" type="radio" name="reizbarkeitIrisAtropin" value="unknown" checked="checked"/><label for="reizbarkeitIrisAtropinUnknown">n/a</label>
+                </fieldset>
+              </div>
+              <div data-role="fieldcontain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                  <legend>Tropicamid</legend>
+                  <input id="reizbarkeitIrisTropicamidPositive" type="radio" name="reizbarkeitIrisTropicamid" value="positive"/><label for="reizbarkeitIrisTropicamidPositive">yes</label>
+                  <input id="reizbarkeitIrisTropicamidNegative" type="radio" name="reizbarkeitIrisTropicamid" value="negative"/><label for="reizbarkeitIrisTropicamidNegative">no</label>
+                  <input id="reizbarkeitIrisTropicamidUnknown" type="radio" name="reizbarkeitIrisTropicamid" value="unknown" checked="checked"/><label for="reizbarkeitIrisTropicamidUnknown">n/a</label>
+                </fieldset>
+              </div>
+              <div data-role="fieldcontain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                  <legend>Acetylcholin</legend>
+                  <input id="reizbarkeitIrisAcetylcholinPositive" type="radio" name="reizbarkeitIrisAcetylcholin" value="positive"/><label for="reizbarkeitIrisAcetylcholinPositive">yes</label>
+                  <input id="reizbarkeitIrisAcetylcholinNegative" type="radio" name="reizbarkeitIrisAcetylcholin" value="negative"/><label for="reizbarkeitIrisAcetylcholinNegative">no</label>
+                  <input id="reizbarkeitIrisAcetylcholinUnknown" type="radio" name="reizbarkeitIrisAcetylcholin" value="unknown" checked="checked"/><label for="reizbarkeitIrisAcetylcholinUnknown">n/a</label>
+                </fieldset>
+              </div>
+              <div data-role="fieldcontain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                  <legend>Noradrenalin/Adrenalin</legend>
+                  <input id="reizbarkeitIrisAdrenalinPositive" type="radio" name="reizbarkeitIrisAdrenalin" value="positive"/><label for="reizbarkeitIrisAdrenalinPositive">yes</label>
+                  <input id="reizbarkeitIrisAdrenalinNegative" type="radio" name="reizbarkeitIrisAdrenalin" value="negative"/><label for="reizbarkeitIrisAdrenalinNegative">no</label>
+                  <input id="reizbarkeitIrisAdrenalinUnknown" type="radio" name="reizbarkeitIrisAdrenalin" value="unknown" checked="checked"/><label for="reizbarkeitIrisAdrenalinUnknown">n/a</label>
+                </fieldset>
+              </div>
+            </div>
+            
+            <div data-role="collapsible" data-collapsed="true">
+              <h2>Mechanical excitability</h2>
+              <div data-role="fieldcontain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                  <legend>Zsako</legend>
+                  <input id="zsakoPositive" type="radio" name="reizbarkeitZsako" value="positive"/><label for="zsakoPositive">yes</label>
+                  <input id="zsakoNegative" type="radio" name="reizbarkeitZsako" value="negative"/><label for="zsakoNegative">no</label>
+                  <input id="zsakoUnknown" type="radio" name="reizbarkeitZsako" value="unknown" checked="checked"/><label for="zsakoUnknown">n/a</label>
+                </fieldset>
+              </div>
+              <div data-role="fieldcontain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                  <legend>Reversible Idiomuscular Contraction</legend>
+                  <input id="idioMuskulaererWulstReversiblePositive" type="radio" name="reizbarkeitIdioMuskulaererWulstReversible" value="positive"/><label for="idioMuskulaererWulstReversiblePositive">yes</label>
+                  <input id="idioMuskulaererWulstReversibleNegative" type="radio" name="reizbarkeitIdioMuskulaererWulstReversible" value="negative"/><label for="idioMuskulaererWulstReversibleNegative">no</label>
+                  <input id="idioMuskulaererWulstReversibleUnknown" type="radio" name="reizbarkeitIdioMuskulaererWulstReversible" value="unknown" checked="checked"/><label for="idioMuskulaererWulstReversibleUnknown">n/a</label>
+                </fieldset>
+              </div>
+              <div data-role="fieldcontain">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                  <legend>Persistent Idiomuscular Contraction</legend>
+                  <input id="idioMuskulaererWulstPersistentPositive" type="radio" name="reizbarkeitIdioMuskulaererWulstPersistent" value="positive"/><label for="idioMuskulaererWulstPersistentPositive">yes</label>
+                  <input id="idioMuskulaererWulstPersistentNegative" type="radio" name="reizbarkeitIdioMuskulaererWulstPersistent" value="negative"/><label for="idioMuskulaererWulstPersistentNegative">no</label>
+                  <input id="idioMuskulaererWulstPersistentUnknown" type="radio" name="reizbarkeitIdioMuskulaererWulstPersistent" value="unknown" checked="checked"/><label for="idioMuskulaererWulstPersistentUnknown">n/a</label>
+                </fieldset>
+              </div>
+            </div>
+            
+            <div data-role="controlgroup" data-type="horizontal">
+              <input type="submit" class="button" data-theme="a" value="Calculate"/>
+              <input type="reset" class="button" value="Clear"/>
+            </div>
+          </form>
+        </div>
+      </div>
+      </div>
+      <div data-role="footer">
+        <h4 class="versionInfo">Version 2.2.3</h4>
+      </div>
+    </div>
+
+    <div id="results" data-role="page" data-theme="d" data-add-back-btn="false">
+      <div data-role="header">
+        <h1>Death Time</h1>
+        <a id="backToCaptureButton">back</a>
+      </div>
+      <div data-role="content">
+        <div class="container">
+          <div id="results">
+            <form id="resultForm" action="#" method="post" name="resultForm">
+
+              <div id="results">
+                <div class="section">
+                  <h2>Results</h2>
+                  <div class="sectionContent" style="height: 30em;">
+                    <div class="field">
+                      <span class="label">Time (relative)</span>
+                      <span class="value" id="tRelative">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Time (absolute)</span>
+                      <span class="value" id="tAbsolute">&#160;</span>
+                    </div>
+                  </div>
+                  <div class="sectionContent">
+                    <div id="messages">&#160;</div>
+                  </div>
+                  <div class="sectionContent" style="display: none;">
+                    <div class="field">
+                      <span class="label">Time (Temperature)</span>
+                      <span class="value" id="tTemperature">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Time (Lividity)</span>
+                      <span class="value" id="tLividity">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Time (Rigor)</span>
+                      <span class="value" id="tRigor">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Time (Mimic)</span>
+                      <span class="value" id="tMimic">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Time (Orbicularis Oris)</span>
+                      <span class="value" id="tOrbicularis">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Time (Iris)</span>
+                      <span class="value" id="tIris">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Time (Zsako)</span>
+                      <span class="value" id="tZsako">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Time (Idiomuscular Contraction)</span>
+                      <span class="value" id="tIdio">&#160;</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="section" style="display: none;">
+                  <h2>Details</h2>
+                  <div class="sectionContent">
+                    <div class="field">
+                      <span class="label">Correction Factor (Adapted)</span>
+                      <span class="value" id="correctionFactorAdapted">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Body Weight (Adapted)</span>
+                      <span class="value" id="bodyWeightAdapted">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">q</span>
+                      <span class="value" id="q">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Temperature Error</span>
+                      <span class="value" id="temperatureError">&#160;</span>
+                    </div>
+                    <div class="field">
+                      <span class="label">Time Temp w/o Error</span>
+                      <span class="value" id="tTempWithoutError">&#160;</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div data-role="footer">
+        <h4 class="versionInfo">Version 2.2.3</h4>
+      </div>
+    </div>
+
+  </body>
+</html>
